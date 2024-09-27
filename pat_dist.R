@@ -35,7 +35,7 @@ threads <- args$threads
 
 #### step 1: Upload trees file ####
 
-trees <- read.tree("trees.nwk")
+trees <- read.tree(tree.file)
 
 
 if (class(trees) == "phylo") {
@@ -49,7 +49,7 @@ if (class(trees) == "phylo") {
 
 #### step 2: Upload info file containing sequence categories and compute patristic distance ####
 
-info <- read.csv("info.csv", stringsAsFactors=F)
+info <- read.csv(info.file, stringsAsFactors=F)
 
 info <- info[match(trees[[1]]$tip.label, info$FULLSEQID), ]
 
@@ -105,4 +105,4 @@ ttd.data <- mclapply(
   do.call(rbind, .)
 
 
-write.csv(ttd.data, "TTD.csv", row.names=F)
+write.csv(ttd.data, output.file, row.names=F)

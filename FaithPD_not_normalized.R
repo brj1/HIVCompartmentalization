@@ -15,14 +15,14 @@ info.file <- args$info
 output.file <- args$output
 threads <- args$threads
 
-trees <- read.tree("P8_UAC_UPC_trees.nwk")
+trees <- read.tree(tree.file)
 
 if (class(trees) == "phylo") {
   trees <- list(trees)
   names(trees) <- "tree"
 }
 
-info <- read.csv("info.csv", stringsAsFactors=F)
+info <- read.csv(info.file, stringsAsFactors=F)
 info <- info[match(trees[[1]]$tip.label, info$FULLSEQID), ]
 info.s <- split(info, info$TYPE)
 
@@ -51,5 +51,5 @@ pd.data <- mclapply(
 ) %>% 
   do.call(rbind, .)
 
-write.csv(pd.data, "P8_FPD_NN_distinct.csv", row.names=F)
+write.csv(pd.data, output.file, row.names=F)
 
